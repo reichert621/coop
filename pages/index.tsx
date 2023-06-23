@@ -61,7 +61,7 @@ export default function Home() {
                   The community will be moderated by senior level engineers like
                   myself, in order to provide mentorship, advice, and help
                   unblock learners. In the beginning, it will only be me, which
-                  is why I'd like to keep the group small to start.
+                  is why I&apos;d like to keep the group small to start.
                 </p>
               </div>
 
@@ -76,10 +76,11 @@ export default function Home() {
                   JavaScript/TypeScript/NodeJS.
                 </p>
                 <p className="mb-2 text-gray-300">
-                  The goal is to simulate what it's like working at a typical
-                  Silicon Valley tech company. Each week, we will set individual
-                  goals, write code, create Pull Requests in GitHub, and review
-                  each other's code. Each member is expected to build in public.
+                  The goal is to simulate what it&apos;s like working at a
+                  typical Silicon Valley tech company. Each week, we will set
+                  individual goals, write code, create Pull Requests in GitHub,
+                  and review each other&apos;s code. Each member is expected to
+                  build in public.
                 </p>
                 <p className="mb-2 text-gray-300">
                   The community will be kept relatively small to start. People
@@ -149,14 +150,15 @@ export default function Home() {
                   >
                     Github
                   </a>
-                  ). I've been a software developer for almost 10 years now. I
-                  started my career in San Francisco working at various
+                  ). I&apos;ve been a software developer for almost 10 years
+                  now. I started my career in San Francisco working at various
                   startups, then spent a bit of time at Stripe, at which point I
                   moved to New York.
                 </p>
                 <p className="mb-2 text-gray-300">
                   In the summer of 2020, I went through Y Combinator. Since
-                  then, I've spent most of my time working on my own startups.
+                  then, I&apos;ve spent most of my time working on my own
+                  startups.
                 </p>
               </div>
               <div className="mb-12 border-l-4 border-pink-700 pl-4">
@@ -165,9 +167,9 @@ export default function Home() {
                 </h3>
                 <p className="mb-2 text-gray-300">
                   I have some free time on my hands this summer, and I was
-                  considering doing some volunteer work. I've always enjoyed
-                  coding and mentoring junior engineers, so I figured this could
-                  be a nice way to give back.
+                  considering doing some volunteer work. I&apos;ve always
+                  enjoyed coding and mentoring junior engineers, so I figured
+                  this could be a nice way to give back.
                 </p>
                 <p className="mb-2 text-gray-300">
                   I also would like to launch a few side projects this summer,
