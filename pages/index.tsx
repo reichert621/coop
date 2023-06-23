@@ -10,7 +10,7 @@ export default function Home() {
       <Head>
         <title>Home</title>
         <meta name="description" content="Home page" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon.svg" />
       </Head>
 
       <main className="mx-auto flex w-full max-w-2xl flex-1 flex-col py-8">
