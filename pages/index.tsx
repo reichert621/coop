@@ -28,8 +28,8 @@ export default function Home() {
               </span>
             </h1>
             <p className="mt-2 text-lg text-gray-300 sm:mt-4 sm:text-xl">
-              The Hacker Co-op Discord community will be a space where beginner
-              and senior programmers can come together and support one another.
+              The Hacker Co-op Discord community is a space where beginner and
+              senior programmers can come together and support one another.
             </p>
           </div>
 
@@ -53,7 +53,7 @@ export default function Home() {
                   What is this?
                 </h3>
                 <p className="mb-2 text-gray-300">
-                  The Hacker Co-op is a small Discord community of 10 to 20
+                  The Hacker Co-op will be a small Discord community of 10 to 20
                   people who have started learning programming, and want to
                   level up with a group of like-minded individuals.
                 </p>
