@@ -18,8 +18,8 @@ export default function Home() {
   return (
     <div className="flex min-h-screen w-full flex-1 flex-col bg-gray-900 text-gray-100">
       <Head>
-        <title>Home</title>
-        <meta name="description" content="Home page" />
+        <title>The Hacker Co-op</title>
+        <meta name="description" content="Apply to join the Hacker Co-op!" />
         <link rel="icon" href="/favicon.svg" />
       </Head>
 
