@@ -28,8 +28,8 @@ export default function Home() {
               </span>
             </h1>
             <p className="mt-2 text-lg text-gray-300 sm:mt-4 sm:text-xl">
-              The Hacker Co-op Discord community is a space where beginner and
-              senior programmers can come together and support one another.
+              The Hacker Co-op Discord community will be a space where beginner
+              and senior programmers can come together and support one another.
             </p>
           </div>
 
