@@ -5,6 +5,16 @@ import {A} from '@/components/Button';
 import FadeIn from '@/components/FadeIn';
 
 export default function Home() {
+  const scrollRef = React.useRef<HTMLDivElement>(null);
+
+  const handleScrollAndHighlightAboutMe = () => {
+    if (!scrollRef.current) {
+      return;
+    }
+
+    scrollRef.current.scrollIntoView({behavior: 'smooth'});
+  };
+
   return (
     <div className="flex min-h-screen w-full flex-1 flex-col bg-gray-900 text-gray-100">
       <Head>
@@ -58,10 +68,16 @@ export default function Home() {
                   level up with a group of like-minded individuals.
                 </p>
                 <p className="mb-2 text-gray-300">
-                  The community will be moderated by senior level engineers like
-                  myself, in order to provide mentorship, advice, and help
-                  unblock learners. In the beginning, it will only be me, which
-                  is why I&apos;d like to keep the group small to start.
+                  The community will be moderated by senior level engineers like{' '}
+                  <button
+                    className="text-gray-100 underline hover:text-white"
+                    onClick={handleScrollAndHighlightAboutMe}
+                  >
+                    myself
+                  </button>
+                  , in order to provide mentorship, advice, and help unblock
+                  learners. In the beginning, it will only be me, which is why
+                  I&apos;d like to keep the group small to start. 🙂
                 </p>
               </div>
 
@@ -101,7 +117,7 @@ export default function Home() {
                   >
                     Click here
                   </a>{' '}
-                  to fill out a Google Form application.
+                  to fill out a Google Form application. 🚀
                 </p>
                 <p className="mb-2 text-gray-300">
                   For the first cohort, the following applicants are preferred:
@@ -127,7 +143,10 @@ export default function Home() {
                   similar time zones.
                 </p>
               </div>
-              <div className="mb-12 border-l-4 border-pink-600 pl-4">
+              <div
+                ref={scrollRef}
+                className="mb-12 border-l-4 border-pink-600 pl-4"
+              >
                 <h3 className="mb-2 text-lg font-semibold text-gray-100">
                   Who are you?
                 </h3>
@@ -158,7 +177,7 @@ export default function Home() {
                 <p className="mb-2 text-gray-300">
                   In the summer of 2020, I went through Y Combinator. Since
                   then, I&apos;ve spent most of my time working on my own
-                  startups.
+                  startups. 👨‍💻
                 </p>
               </div>
               <div className="mb-12 border-l-4 border-pink-700 pl-4">
@@ -169,11 +188,13 @@ export default function Home() {
                   I have some free time on my hands this summer, and I was
                   considering doing some volunteer work. I&apos;ve always
                   enjoyed coding and mentoring junior engineers, so I figured
-                  this could be a nice way to give back.
+                  this could be a nice way to give back, especially as someone
+                  who was also self-taught.
                 </p>
                 <p className="mb-2 text-gray-300">
                   I also would like to launch a few side projects this summer,
                   and would love to have an accountability group to work with!
+                  🔥
                 </p>
               </div>
             </div>
@@ -181,7 +202,7 @@ export default function Home() {
 
           <FadeIn direction="up" delay={200}>
             <A
-              className="w-full rounded-lg"
+              className="mb-24 w-full rounded-lg"
               variant="primary"
               size="lg"
               href="https://docs.google.com/forms/d/e/1FAIpQLScIq8C6crNpSHJomth-urPay_zGnb7KmO_AGVaegZ3jVfNzhA/viewform?usp=sf_link"
