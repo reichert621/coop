@@ -14,7 +14,7 @@ export default function Home() {
       </Head>
 
       <main className="mx-auto flex w-full max-w-2xl flex-1 flex-col py-8">
-        <div className="flex flex-1 flex-col px-8 py-8">
+        <div className="flex flex-1 flex-col px-4 py-8 sm:px-8">
           <div className="mb-4 mt-8 sm:mb-8 sm:mt-16">
             <div className="mb-4 flex">
               <span className="animate-bounce rounded-full bg-pink-500 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-pink-100">
