@@ -87,9 +87,11 @@ export default function Home() {
                 </h3>
                 <p className="mb-2 text-gray-300">
                   The community will be focused on learning through building
-                  individual web-based projects. To start, we will focus on
-                  using one of the most popular tech stacks: HTML, CSS,
-                  JavaScript/TypeScript/NodeJS.
+                  individual web-based projects. To start, the group will be
+                  comprised of people interested in using one of the most
+                  popular tech stacks: HTML, CSS, JavaScript/TypeScript/NodeJS.
+                  Each individual will be responsible for coming up with their
+                  own project ideas.
                 </p>
                 <p className="mb-2 text-gray-300">
                   The goal is to simulate what it&apos;s like working at a
