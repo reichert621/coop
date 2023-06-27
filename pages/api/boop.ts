@@ -32,6 +32,7 @@ async function middleware(
 }
 
 const DISCORD_WEBHOOK_URL = process.env.DISCORD_WEBHOOK_URL!;
+const ACCESS_TOKEN = process.env.ACCESS_TOKEN!;
 
 type Data = any;
 
@@ -41,6 +42,19 @@ export default async function handler(
 ) {
   try {
     await middleware(req, res, cors);
+
+    const {authorization} = req.headers;
+    const shouldRequireAuthorization =
+      ACCESS_TOKEN && ACCESS_TOKEN.trim().length > 0;
+
+    if (
+      shouldRequireAuthorization &&
+      (!authorization || !authorization.includes(ACCESS_TOKEN))
+    ) {
+      return res.status(401).json({
+        error: 'Access denied. Please provide a valid access token or API key.',
+      });
+    }
 
     const params = {...req.query, ...req.body};
     const {content} = params;

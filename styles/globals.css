@@ -41,12 +41,12 @@ a.Button--primary,
 }
 
 .Button--secondary {
-  @apply border border-transparent bg-gray-700 text-gray-100;
+  @apply border border-transparent bg-gray-200 text-gray-900;
 }
 
 a.Button--secondary,
 .Button--secondary:enabled{
-  @apply hover:bg-gray-600;
+  @apply hover:bg-white;
 }
 
 .Button--danger {
