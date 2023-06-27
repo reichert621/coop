@@ -66,7 +66,7 @@ export default function Homework() {
           </FadeIn>
 
           <FadeIn direction="left" delay={200}>
-            <div className="flex flex-col gap-4">
+            <div className="mb-24 flex flex-col gap-4">
               <h2 className="mt-2 text-3xl font-bold text-white">Overview</h2>
 
               <p className="text-lg text-gray-300">
@@ -285,6 +285,18 @@ export default function Homework() {
                   #discussion
                 </a>{' '}
                 channel.
+              </p>
+
+              <p className="text-lg text-gray-300">
+                Also, if you applied but haven&apos;t received an email yet,
+                feel free to reach out at{' '}
+                <a
+                  className="text-gray-100 underline hover:text-white"
+                  href="mailto:hackercoop2023@gmail.com"
+                >
+                  hackercoop2023@gmail.com
+                </a>
+                .
               </p>
             </div>
           </FadeIn>
