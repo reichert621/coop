@@ -1,24 +1,37 @@
 import type {NextApiRequest, NextApiResponse} from 'next';
 import axios from 'axios';
+import Cors from 'cors';
+
+import {parseErrorMessage, parseErrorStatus} from '@/utils/index';
+
+// Initializing the cors middleware
+const cors = Cors({
+  methods: ['GET', 'POST'],
+});
+
+// Helper method to wait for a middleware to execute before continuing
+// And to throw an error when an error happens in a middleware
+async function middleware(
+  req: NextApiRequest,
+  res: NextApiResponse<any>,
+  fn: (
+    req: NextApiRequest,
+    res: NextApiResponse<any>,
+    cb: (data: any) => any
+  ) => any
+) {
+  return new Promise((resolve, reject) => {
+    fn(req, res, (result) => {
+      if (result instanceof Error) {
+        return reject(result);
+      }
+
+      return resolve(result);
+    });
+  });
+}
 
 const DISCORD_WEBHOOK_URL = process.env.DISCORD_WEBHOOK_URL!;
-
-const parseErrorStatus = (err: any) => {
-  return (
-    err.status || err.response?.status || err.response?.data?.status || 500
-  );
-};
-
-const parseErrorMessage = (err: any) => {
-  return (
-    err.response?.data?.message ||
-    err.response?.data?.error ||
-    err.response?.data?.error_description ||
-    err.message ||
-    String(err) ||
-    err
-  );
-};
 
 type Data = any;
 
@@ -27,6 +40,8 @@ export default async function handler(
   res: NextApiResponse<Data>
 ) {
   try {
+    await middleware(req, res, cors);
+
     const params = {...req.query, ...req.body};
     const {content} = params;
 
