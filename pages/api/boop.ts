@@ -51,7 +51,12 @@ export default async function handler(
 
     const response = await axios.post(DISCORD_WEBHOOK_URL, {content});
 
-    return res.status(200).json({status: response.status, message: content});
+    return res.status(200).json({
+      status: response.status,
+      message: content,
+      channel:
+        'https://discord.com/channels/1122935602271223838/1123062270998630440',
+    });
   } catch (err) {
     const status = parseErrorStatus(err);
     const message = parseErrorMessage(err);
