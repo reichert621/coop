@@ -4,6 +4,7 @@ import Head from 'next/head';
 import Alert from '@/components/Alert';
 import {A} from '@/components/Button';
 import FadeIn from '@/components/FadeIn';
+import {DiscordIcon} from '@/components/Icons';
 
 const curl = `
 curl https://www.hackercoop.dev/api/boop \\
@@ -24,7 +25,20 @@ export default function Homework() {
         <link rel="icon" href="/favicon.svg" />
       </Head>
 
-      <main className="mx-auto flex w-full max-w-2xl flex-1 flex-col py-8">
+      <main className="mx-auto flex w-full max-w-2xl flex-1 flex-col py-4">
+        <div className="flex items-center justify-end px-4 sm:px-8">
+          <A
+            className="rounded-md"
+            variant="discord"
+            size="sm"
+            icon={<DiscordIcon className="mr-2 h-4 w-4" />}
+            href="https://discord.gg/pJCpqTkn"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Join us on Discord
+          </A>
+        </div>
         <div className="flex flex-1 flex-col px-4 py-8 sm:px-8 sm:py-16">
           <h1 className="mb-4 mt-8 border-b-2 border-gray-700 pb-2 text-4xl font-extrabold text-white sm:text-5xl">
             Homework Assignment

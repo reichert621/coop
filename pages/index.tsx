@@ -3,6 +3,7 @@ import Head from 'next/head';
 
 import {A} from '@/components/Button';
 import FadeIn from '@/components/FadeIn';
+import {DiscordIcon} from '@/components/Icons';
 
 export default function Home() {
   const scrollRef = React.useRef<HTMLDivElement>(null);
@@ -23,7 +24,21 @@ export default function Home() {
         <link rel="icon" href="/favicon.svg" />
       </Head>
 
-      <main className="mx-auto flex w-full max-w-2xl flex-1 flex-col py-8">
+      <main className="mx-auto flex w-full max-w-2xl flex-1 flex-col py-4">
+        <div className="flex items-center justify-end px-4 sm:px-8">
+          <A
+            className="rounded-md"
+            variant="discord"
+            size="sm"
+            icon={<DiscordIcon className="mr-2 h-4 w-4" />}
+            href="https://discord.gg/pJCpqTkn"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Join us on Discord
+          </A>
+        </div>
+
         <div className="flex flex-1 flex-col px-4 py-8 sm:px-8">
           <div className="mb-4 mt-8 sm:mb-8 sm:mt-16">
             <div className="mb-4 flex">
@@ -202,18 +217,34 @@ export default function Home() {
             </div>
           </FadeIn>
 
-          <FadeIn direction="up" delay={200}>
-            <A
-              className="mb-24 w-full rounded-lg"
-              variant="primary"
-              size="lg"
-              href="https://docs.google.com/forms/d/e/1FAIpQLScIq8C6crNpSHJomth-urPay_zGnb7KmO_AGVaegZ3jVfNzhA/viewform?usp=sf_link"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Apply now for access
-            </A>
-          </FadeIn>
+          <div className="mb-24">
+            <FadeIn direction="up" delay={200}>
+              <A
+                className="mb-2 w-full rounded-lg"
+                variant="primary"
+                size="lg"
+                href="https://docs.google.com/forms/d/e/1FAIpQLScIq8C6crNpSHJomth-urPay_zGnb7KmO_AGVaegZ3jVfNzhA/viewform?usp=sf_link"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Apply now for access
+              </A>
+            </FadeIn>
+            <FadeIn direction="up" delay={400}>
+              <div className="text-center text-sm text-gray-300">
+                In the meantime, come say hi on{' '}
+                <a
+                  className="text-gray-100 underline hover:text-white"
+                  href="https://discord.gg/pJCpqTkn"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Discord
+                </a>{' '}
+                👋
+              </div>
+            </FadeIn>
+          </div>
         </div>
       </main>
     </div>

@@ -2,7 +2,7 @@ import React, {AnchorHTMLAttributes, ButtonHTMLAttributes} from 'react';
 
 import Spinner from '@/components/Spinner';
 
-type Variant = 'primary' | 'secondary' | 'danger';
+type Variant = 'primary' | 'secondary' | 'danger' | 'discord';
 type Size = 'xs' | 'sm' | 'lg' | 'xl';
 
 const getColorClassNames = (variant?: Variant) => {
@@ -13,6 +13,8 @@ const getColorClassNames = (variant?: Variant) => {
       return 'Button--secondary';
     case 'danger':
       return 'Button--danger';
+    case 'discord':
+      return 'Button--discord';
     default:
       return '';
   }

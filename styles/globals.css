@@ -58,6 +58,14 @@ a.Button--danger,
   @apply hover:bg-red-500;
 }
 
+.Button--discord {
+  @apply border border-transparent bg-gray-600 text-white;
+}
+
+a.Button--discord,
+.Button--discord:enabled {
+  @apply hover:bg-gray-500;
+}
 
 .Button--primary:disabled,
 .Button--secondary:disabled,
