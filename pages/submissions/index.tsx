@@ -80,7 +80,8 @@ const SuccessModal = ({
           Application successfully submitted
         </h1>
         <p className="text-sm text-gray-400 sm:text-base">
-          Thanks for submitting your application! We'll be in touch shortly.
+          Thanks for submitting your application! We&apos;ll be in touch
+          shortly.
         </p>
         <Button className="mt-6 rounded-md" variant="discord" onClick={onClose}>
           Return to application
