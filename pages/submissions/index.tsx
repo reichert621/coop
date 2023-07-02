@@ -235,7 +235,7 @@ export default function Submissions() {
   return (
     <div className="flex min-h-screen w-full flex-1 flex-col bg-gray-900 text-gray-100">
       <Head>
-        <title>The Hacker Co-op | Demo</title>
+        <title>The Hacker Co-op | Application</title>
         <meta name="description" content="Demo project page" />
         <link rel="icon" href="/favicon.svg" />
       </Head>
