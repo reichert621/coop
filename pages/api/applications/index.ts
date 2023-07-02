@@ -14,7 +14,7 @@ type Data = any;
 
 // Admin only endpoint
 async function get(req: NextApiRequest, res: NextApiResponse<Data>) {
-  if (process.env.NODE_ENV === 'production') {
+  if (process.env.NODE_ENV !== 'development') {
     return res.status(401).json({error: 'Access denied.'});
   }
 
