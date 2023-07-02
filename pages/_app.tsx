@@ -1,3 +1,4 @@
+import 'react-toastify/dist/ReactToastify.css';
 import '@/styles/globals.css';
 import type {AppProps} from 'next/app';
 import {
@@ -7,6 +8,7 @@ import {
   Fira_Code,
   VT323,
 } from 'next/font/google';
+import {ToastContainer} from 'react-toastify';
 
 const sans = Inter({
   variable: '--font-sans',
@@ -31,6 +33,7 @@ export default function App({Component, pageProps}: AppProps) {
           }
         `}
       </style>
+      <ToastContainer autoClose={8000} theme="dark" />
       <Component {...pageProps} />
     </>
   );
