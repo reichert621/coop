@@ -69,6 +69,8 @@ a.Button--discord,
 
 .Button--primary:disabled,
 .Button--secondary:disabled,
-.Button--danger:disabled {
+.Button--danger:disabled,
+input:disabled,
+textarea:disabled {
   @apply cursor-not-allowed opacity-75;
 }

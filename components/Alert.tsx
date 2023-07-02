@@ -10,7 +10,7 @@ type AlertType = 'success' | 'info' | 'warning' | 'danger';
 const getClassNamesByAlertType = (type: AlertType) => {
   switch (type) {
     case 'success':
-      return 'border-green-700 bg-green-500 bg-opacity-60';
+      return 'border-indigo-700 bg-indigo-500 bg-opacity-60';
     case 'info':
       return 'border-blue-700 bg-blue-500 bg-opacity-60';
     case 'warning':
@@ -29,7 +29,7 @@ const AlertIcon = ({
 }) => {
   switch (type) {
     case 'success':
-      return <CheckCircleIcon className={`${className} text-green-200`} />;
+      return <CheckCircleIcon className={`${className} text-indigo-200`} />;
     case 'info':
       return <InformationCircleIcon className={`${className} text-blue-200`} />;
     case 'warning':

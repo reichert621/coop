@@ -43,7 +43,7 @@ export const Modal = ({
               leaveTo="opacity-0 scale-95"
             >
               <Dialog.Panel
-                className={`${className} w-full transform overflow-hidden rounded-lg shadow-xl transition-all`}
+                className={`${className} w-full transform shadow-xl transition-all`}
               >
                 {children}
               </Dialog.Panel>

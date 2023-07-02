@@ -11,7 +11,7 @@ export const Label = (props: LabelProps) => {
 
   return (
     <label
-      className={`${className} block text-xs font-semibold tracking-widest text-gray-300`}
+      className={`${className} block text-xs font-semibold uppercase tracking-widest text-gray-300`}
       {...rest}
     >
       {children}
@@ -41,7 +41,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
           error
             ? 'border-red-500 focus:border-red-400'
             : 'border-gray-700 focus:border-gray-600'
-        } w-full rounded border bg-gray-700 bg-opacity-60 px-3 py-2 font-medium text-gray-300 outline-none`}
+        } w-full rounded border bg-gray-700 bg-opacity-60 px-3 py-2 font-medium text-gray-300 outline-none placeholder:text-gray-500`}
         {...rest}
       />
     );
@@ -68,7 +68,7 @@ export const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(
           error
             ? 'border-red-500 focus:border-red-400'
             : 'border-gray-700 focus:border-gray-600'
-        } resize-none rounded border bg-gray-900 bg-opacity-60 px-3 py-2 text-sm font-medium tracking-wide text-gray-300 outline-none`}
+        } w-full resize-none rounded border bg-gray-700 bg-opacity-60 px-3 py-2 font-medium text-gray-300 outline-none placeholder:text-gray-500`}
         {...rest}
       />
     );
