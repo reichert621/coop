@@ -370,6 +370,7 @@ export default function Submissions() {
                     name="project_proposal"
                     required
                     rows={8}
+                    placeholder="Type in your proposal, or enter a public GitHub URL"
                     value={project_proposal}
                     onChange={(e) =>
                       setFormState((prev) => ({
