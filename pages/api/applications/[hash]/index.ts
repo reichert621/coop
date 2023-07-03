@@ -42,7 +42,14 @@ async function get(req: NextApiRequest, res: NextApiResponse<Data>) {
 async function put(req: NextApiRequest, res: NextApiResponse<Data>) {
   try {
     const params = {...req.query, ...req.body};
-    const {hash, ...updates} = params;
+    const {
+      hash,
+      discord_username,
+      github_username,
+      homework_staging_url,
+      homework_github_url,
+      project_proposal,
+    } = params;
     const filter = hash ? decodeSubmissionHash(hash) : null;
 
     if (!filter) {
@@ -50,10 +57,24 @@ async function put(req: NextApiRequest, res: NextApiResponse<Data>) {
     }
 
     const {id, email, updated_at} = filter;
-    console.log('[PUT /api/applications/:hash] Updating:', {filter, updates});
+    console.log('[PUT /api/applications/:hash] Updating:', {
+      filter,
+      discord_username,
+      github_username,
+      homework_staging_url,
+      homework_github_url,
+      project_proposal,
+    });
     const {data, error} = await supabase
       .from('applications')
-      .update({...updates, updated_at: new Date()})
+      .update({
+        discord_username,
+        github_username,
+        homework_staging_url,
+        homework_github_url,
+        project_proposal,
+        updated_at: new Date(),
+      })
       .eq('id', id)
       .eq('email', email)
       .eq('updated_at', updated_at)
