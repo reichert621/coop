@@ -18,7 +18,10 @@ async function get(req: NextApiRequest, res: NextApiResponse<Data>) {
     return res.status(401).json({error: 'Access denied.'});
   }
 
-  const {data, error} = await supabase.from('applications').select();
+  const {data, error} = await supabase
+    .from('applications')
+    .select()
+    .order('created_at');
   console.log('[GET /api/applications] Supabase response:', {data, error});
 
   if (error) {
