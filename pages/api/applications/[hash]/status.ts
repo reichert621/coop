@@ -9,6 +9,7 @@ type Data = any;
 const isValidStatus = (status: string) => {
   switch (status) {
     case 'pending':
+    case 'reviewing':
     case 'rejected':
     case 'accepted':
       return true;
@@ -29,7 +30,7 @@ async function post(req: NextApiRequest, res: NextApiResponse<Data>) {
     if (!id) {
       return res.status(401).json({error: 'Access denied.'});
     } else if (!status || !isValidStatus(status)) {
-      return res.status(400).json({error: 'A status is required.'});
+      return res.status(400).json({error: 'A valid status is required.'});
     }
 
     console.log('[PUT /api/applications/:hash/status] Updating:', {

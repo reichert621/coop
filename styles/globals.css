@@ -69,6 +69,7 @@ a.Button--discord,
 
 .Button--primary:disabled,
 .Button--secondary:disabled,
+.Button--discord:disabled,
 .Button--danger:disabled,
 input:disabled,
 textarea:disabled {
