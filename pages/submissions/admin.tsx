@@ -336,7 +336,7 @@ export default function Submissions() {
 
               <section className="mb-8">
                 <h2 className="mb-4 border-b border-gray-700 pb-1 text-sm font-semibold uppercase tracking-widest text-gray-300">
-                  Pending
+                  Pending ({pending.length})
                 </h2>
 
                 <div className="space-y-4">
@@ -359,7 +359,7 @@ export default function Submissions() {
               </section>
               <section className="mb-8">
                 <h2 className="mb-4 border-b border-gray-700 pb-1 text-sm font-semibold uppercase tracking-widest text-gray-300">
-                  Reviewing
+                  Reviewing ({reviewing.length})
                 </h2>
 
                 <div className="space-y-4">
@@ -382,7 +382,7 @@ export default function Submissions() {
               </section>
               <section className="mb-8">
                 <h2 className="mb-4 border-b border-gray-700 pb-1 text-sm font-semibold uppercase tracking-widest text-gray-300">
-                  Accepted
+                  Accepted ({accepted.length})
                 </h2>
 
                 <div className="space-y-4">
@@ -405,7 +405,7 @@ export default function Submissions() {
               </section>
               <section className="mb-8">
                 <h2 className="mb-4 border-b border-gray-700 pb-1 text-sm font-semibold uppercase tracking-widest text-gray-300">
-                  Rejected
+                  Rejected ({rejected.length})
                 </h2>
 
                 <div className="space-y-4">
