@@ -1,12 +1,16 @@
+import {GetServerSidePropsContext} from 'next';
 import React from 'react';
 import Head from 'next/head';
+import {ArrowRightIcon} from '@heroicons/react/24/solid';
+import {Session, createPagesServerClient} from '@supabase/auth-helpers-nextjs';
 
-import {A} from '@/components/Button';
+import {A, Link} from '@/components/Button';
 import FadeIn from '@/components/FadeIn';
 import {DiscordIcon} from '@/components/Icons';
 
-export default function Home() {
+export default function Home({session}: {session: Session}) {
   const scrollRef = React.useRef<HTMLDivElement>(null);
+  console.log('Logged in as:', session);
 
   const handleScrollAndHighlightAboutMe = () => {
     if (!scrollRef.current) {
@@ -25,7 +29,7 @@ export default function Home() {
       </Head>
 
       <main className="mx-auto flex w-full max-w-2xl flex-1 flex-col py-4">
-        <div className="flex items-center justify-end px-4 sm:px-8">
+        <div className="flex items-center justify-end gap-2 px-4 sm:px-8">
           <A
             className="rounded-md"
             variant="discord"
@@ -37,6 +41,25 @@ export default function Home() {
           >
             Join us on Discord
           </A>
+          {session ? (
+            <Link
+              className="rounded-md"
+              href="/dashboard"
+              variant="secondary"
+              size="sm"
+            >
+              Dashboard <ArrowRightIcon className="ml-1 h-4 w-4" />
+            </Link>
+          ) : (
+            <Link
+              className="rounded-md"
+              href="/login"
+              variant="secondary"
+              size="sm"
+            >
+              Sign in <ArrowRightIcon className="ml-1 h-4 w-4" />
+            </Link>
+          )}
         </div>
 
         <div className="flex flex-1 flex-col px-4 py-8 sm:px-8">
@@ -249,4 +272,13 @@ export default function Home() {
       </main>
     </div>
   );
+}
+
+export async function getServerSideProps(ctx: GetServerSidePropsContext) {
+  const supabase = createPagesServerClient(ctx);
+  const {
+    data: {session},
+  } = await supabase.auth.getSession();
+
+  return {props: {session}};
 }

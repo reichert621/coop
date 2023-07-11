@@ -8,7 +8,10 @@ import {
   Fira_Code,
   VT323,
 } from 'next/font/google';
+import {useState} from 'react';
 import {ToastContainer} from 'react-toastify';
+import {createPagesBrowserClient} from '@supabase/auth-helpers-nextjs';
+import {SessionContextProvider, Session} from '@supabase/auth-helpers-react';
 
 const sans = Inter({
   variable: '--font-sans',
@@ -23,6 +26,9 @@ const mono = Fira_Code({
 });
 
 export default function App({Component, pageProps}: AppProps) {
+  // Create a new supabase browser client on every first render.
+  const [supabaseClient] = useState(() => createPagesBrowserClient());
+
   return (
     <>
       <style jsx global>
@@ -34,7 +40,12 @@ export default function App({Component, pageProps}: AppProps) {
         `}
       </style>
       <ToastContainer autoClose={8000} theme="dark" />
-      <Component {...pageProps} />
+      <SessionContextProvider
+        supabaseClient={supabaseClient}
+        initialSession={pageProps.initialSession}
+      >
+        <Component {...pageProps} />
+      </SessionContextProvider>
     </>
   );
 }

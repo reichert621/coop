@@ -1,4 +1,5 @@
 import React, {AnchorHTMLAttributes, ButtonHTMLAttributes} from 'react';
+import NextLink, {LinkProps} from 'next/link';
 
 import Spinner from '@/components/Spinner';
 
@@ -112,5 +113,23 @@ export const A = (props: AnchorProps) => {
       {icon}
       {children}
     </a>
+  );
+};
+
+export const Link = (props: AnchorProps & LinkProps) => {
+  const {className, variant, size, inline, icon, children, ...rest} = props;
+  const variantClassName = getColorClassNames(variant);
+  const sizeClassName = getSizeClassNames(size);
+
+  return (
+    <NextLink
+      className={`${
+        inline ? 'inline-flex' : 'flex'
+      } items-center justify-center font-medium transition-all ${variantClassName} ${sizeClassName} ${className}`}
+      {...rest}
+    >
+      {icon}
+      {children}
+    </NextLink>
   );
 };
