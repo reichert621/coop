@@ -19,7 +19,10 @@ async function get(req: NextApiRequest, res: NextApiResponse<Data>) {
       });
     }
 
-    const {data, error} = await supabase.from('members').select();
+    const {data, error} = await supabase
+      .from('members')
+      .select()
+      .order('updated_at', {ascending: false});
 
     if (error) {
       console.warn('Supabase error:', error);
