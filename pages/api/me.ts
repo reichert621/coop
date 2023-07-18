@@ -4,6 +4,21 @@ import type {NextApiRequest, NextApiResponse} from 'next';
 import {supabase} from '@/utils/supabase/admin';
 import {parseErrorMessage, parseErrorStatus} from '@/utils';
 
+const getSupabaseUser = async (
+  req: NextApiRequest,
+  res: NextApiResponse
+): Promise<User | null> => {
+  const client = createPagesServerClient({
+    req,
+    res,
+  });
+  const {
+    data: {user},
+  } = await client.auth.getUser();
+
+  return user;
+};
+
 const findMemberByUser = async (user: User) => {
   const {error, data} = await supabase
     .from('members')
@@ -114,13 +129,7 @@ type Data = any;
 
 async function get(req: NextApiRequest, res: NextApiResponse<Data>) {
   try {
-    const client = createPagesServerClient({
-      req,
-      res,
-    });
-    const {
-      data: {user},
-    } = await client.auth.getUser();
+    const user = await getSupabaseUser(req, res);
 
     if (!user) {
       return res.status(401).json({
@@ -141,13 +150,7 @@ async function get(req: NextApiRequest, res: NextApiResponse<Data>) {
 
 async function post(req: NextApiRequest, res: NextApiResponse<Data>) {
   try {
-    const client = createPagesServerClient({
-      req,
-      res,
-    });
-    const {
-      data: {user},
-    } = await client.auth.getUser();
+    const user = await getSupabaseUser(req, res);
 
     if (!user) {
       return res.status(401).json({
