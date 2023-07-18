@@ -236,7 +236,7 @@ export default function Submissions() {
     <div className="flex min-h-screen w-full flex-1 flex-col bg-gray-900 text-gray-100">
       <Head>
         <title>The Hacker Co-op | Application</title>
-        <meta name="description" content="Demo project page" />
+        <meta name="description" content="Hacker Co-op application" />
         <link rel="icon" href="/favicon.svg" />
       </Head>
 
@@ -266,7 +266,7 @@ export default function Submissions() {
                   : 'Submit your application'}
               </h1>
               <form
-                className="mb-16 flex flex-col gap-4"
+                className="mb-16 flex flex-col gap-6"
                 onSubmit={handleSubmitApplication}
               >
                 <div>
