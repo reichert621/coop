@@ -22,6 +22,10 @@ import Spinner from '@/components/Spinner';
 import {DiscordIcon, GithubIcon} from '@/components/Icons';
 import Alert from '@/components/Alert';
 
+const isActiveMember = (member: any) => {
+  return !!(member && member.bio && member.project_github_url);
+};
+
 const MemberCard = ({
   member,
   isCurrentUser,
@@ -30,16 +34,15 @@ const MemberCard = ({
   isCurrentUser?: boolean;
 }) => {
   const {
-    id,
-    email,
     display_name: displayName,
     github_username: githubUsername,
     discord_username: discordUsername,
   } = member;
+  const hasIncompleteProfile = !isActiveMember(member);
 
   return (
     <div
-      className={`${
+      className={`${hasIncompleteProfile ? 'opacity-60' : 'opacity-100'} ${
         isCurrentUser
           ? 'border-indigo-500 hover:border-indigo-400'
           : 'border-gray-700 hover:border-gray-600'
@@ -128,6 +131,8 @@ const Dashboard = ({session}: {session: Session}) => {
 
   const me = members.find((m) => m.user_id === session.user.id);
   const others = members.filter((m) => m.user_id !== session.user.id);
+  const active = others.filter((m) => isActiveMember(m));
+  const pending = members.filter((m) => !isActiveMember(m));
   const isMissingProfile = !me || !me.bio || !me.project_github_url;
 
   return (
@@ -185,7 +190,7 @@ const Dashboard = ({session}: {session: Session}) => {
 
               <section className="mb-8">
                 <h2 className="mb-4 mt-8 border-b border-gray-700 pb-1 text-sm font-semibold uppercase tracking-widest text-gray-300">
-                  Your profile
+                  You
                 </h2>
                 <div>
                   <MemberCard member={me} isCurrentUser />
@@ -193,10 +198,20 @@ const Dashboard = ({session}: {session: Session}) => {
               </section>
               <section className="mb-8">
                 <h2 className="mb-4 mt-8 border-b border-gray-700 pb-1 text-sm font-semibold uppercase tracking-widest text-gray-300">
-                  Other members
+                  Members
                 </h2>
                 <div className="space-y-3">
-                  {others.map((member: any) => {
+                  {active.map((member: any) => {
+                    return <MemberCard key={member.id} member={member} />;
+                  })}
+                </div>
+              </section>
+              <section className="mb-8">
+                <h2 className="mb-4 mt-8 border-b border-gray-700 pb-1 text-sm font-semibold uppercase tracking-widest text-gray-300">
+                  Pending
+                </h2>
+                <div className="space-y-3">
+                  {pending.map((member: any) => {
                     return <MemberCard key={member.id} member={member} />;
                   })}
                 </div>
