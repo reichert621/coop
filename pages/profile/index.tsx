@@ -20,6 +20,7 @@ import {
   VercelIcon,
 } from '@/components/Icons';
 import {Label} from '@/components/Input';
+import Spinner from '@/components/Spinner';
 
 const parseTwitterHandle = (twitter: string) => {
   if (twitter.includes('twitter.com')) {
@@ -65,7 +66,13 @@ const Profile = ({session}: {session: Session}) => {
   };
 
   if (isLoading || !profile || !!error) {
-    return null;
+    return (
+      <div className="flex w-full flex-1 flex-col items-center justify-center bg-gray-900 p-8 text-gray-300">
+        <FadeIn delay={400}>
+          <Spinner className="h-8 w-8" />
+        </FadeIn>
+      </div>
+    );
   }
 
   const {
@@ -276,7 +283,13 @@ export default function ProfilePage() {
   }, [isLoading, session, error]);
 
   if (isLoading || !session || !!error) {
-    return null;
+    return (
+      <div className="flex min-h-screen w-full flex-1 flex-col items-center justify-center bg-gray-900 p-8 text-gray-300">
+        <FadeIn delay={400}>
+          <Spinner className="h-8 w-8" />
+        </FadeIn>
+      </div>
+    );
   }
 
   return (
