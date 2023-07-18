@@ -177,28 +177,32 @@ const Dashboard = ({session}: {session: Session}) => {
             </FadeIn>
           )}
 
-          <h1 className="mb-6 text-4xl font-extrabold text-white sm:text-5xl">
-            Cohort #1
-          </h1>
-
-          <section className="mb-8">
-            <h2 className="mb-4 mt-8 border-b border-gray-700 pb-1 text-sm font-semibold uppercase tracking-widest text-gray-300">
-              Your profile
-            </h2>
+          <FadeIn>
             <div>
-              <MemberCard member={me} isCurrentUser />
+              <h1 className="mb-6 text-4xl font-extrabold text-white sm:text-5xl">
+                Cohort #1
+              </h1>
+
+              <section className="mb-8">
+                <h2 className="mb-4 mt-8 border-b border-gray-700 pb-1 text-sm font-semibold uppercase tracking-widest text-gray-300">
+                  Your profile
+                </h2>
+                <div>
+                  <MemberCard member={me} isCurrentUser />
+                </div>
+              </section>
+              <section className="mb-8">
+                <h2 className="mb-4 mt-8 border-b border-gray-700 pb-1 text-sm font-semibold uppercase tracking-widest text-gray-300">
+                  Other members
+                </h2>
+                <div className="space-y-3">
+                  {others.map((member: any) => {
+                    return <MemberCard key={member.id} member={member} />;
+                  })}
+                </div>
+              </section>
             </div>
-          </section>
-          <section className="mb-8">
-            <h2 className="mb-4 mt-8 border-b border-gray-700 pb-1 text-sm font-semibold uppercase tracking-widest text-gray-300">
-              Other members
-            </h2>
-            <div className="space-y-3">
-              {others.map((member: any) => {
-                return <MemberCard key={member.id} member={member} />;
-              })}
-            </div>
-          </section>
+          </FadeIn>
         </div>
       </div>
     </main>
