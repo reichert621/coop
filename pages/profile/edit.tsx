@@ -6,6 +6,8 @@ import dayjs from 'dayjs';
 import {ArrowLeftIcon, CheckIcon} from '@heroicons/react/24/solid';
 import {useSessionContext, Session} from '@supabase/auth-helpers-react';
 
+import {parseErrorMessage} from '@/utils';
+import toaster from '@/utils/toaster';
 import FadeIn from '@/components/FadeIn';
 import {A, Button, Link} from '@/components/Button';
 import {Input, Label, TextArea} from '@/components/Input';
@@ -53,7 +55,9 @@ const EditProfile = ({session}: {session: Session}) => {
           twitter_url: user.twitter_url ?? '',
         });
       } catch (err) {
-        //
+        const message = parseErrorMessage(err);
+        console.error('Failed to fetch profile:', message);
+        toaster.error(message);
       } finally {
         setLoadingState(false);
       }
@@ -72,7 +76,9 @@ const EditProfile = ({session}: {session: Session}) => {
       } = await axios.post(`/api/me`, form);
       setUserProfile(user);
     } catch (err) {
-      //
+      const message = parseErrorMessage(err);
+      console.error('Failed to update profile:', message);
+      toaster.error(message);
     } finally {
       setTimeout(() => setUpdatingState(false), 800);
     }

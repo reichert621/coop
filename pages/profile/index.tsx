@@ -9,6 +9,8 @@ import {
   useSupabaseClient,
 } from '@supabase/auth-helpers-react';
 
+import {parseErrorMessage} from '@/utils';
+import toaster from '@/utils/toaster';
 import FadeIn from '@/components/FadeIn';
 import {A, Button, Link} from '@/components/Button';
 import {
@@ -46,6 +48,9 @@ const Profile = ({session}: {session: Session}) => {
         } = await axios.get(`/api/me`);
         setUserProfile(user);
       } catch (err) {
+        const message = parseErrorMessage(err);
+        console.error('Failed to fetch profile:', message);
+        toaster.error(message);
       } finally {
         setLoadingState(false);
       }
