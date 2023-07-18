@@ -22,6 +22,9 @@ const RegisterPage: NextPage = () => {
         options: {redirectTo: `${window.location.origin}/profile`},
       });
 
+      console.log('Logging in:', data);
+      console.log('Redirecting to:', `${window.location.origin}/profile`);
+
       if (error) {
         setErrorMessage(error.message);
       }
