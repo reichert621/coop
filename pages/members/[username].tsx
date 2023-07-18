@@ -94,6 +94,7 @@ const MemberProfile = ({
     project_demo_url: projectDemoUrl,
     project_github_url: projectGithubUrl,
     twitter_url: twitterUrl,
+    has_public_email: hasPublicEmail,
   } = profile;
 
   return (
@@ -124,11 +125,13 @@ const MemberProfile = ({
               {displayName || githubUsername}
             </h1>
 
-            <div className="mb-2 mt-1">
-              <a className="text-lg text-gray-300">{email}</a>
-            </div>
+            {hasPublicEmail && email && (
+              <div className="mt-1">
+                <a className="text-lg text-gray-300">{email}</a>
+              </div>
+            )}
 
-            <div className="mb-6 flex items-center gap-2">
+            <div className="mb-6 mt-2 flex items-center gap-2">
               <a
                 className="inline-flex items-center rounded-full bg-gray-700 px-2 py-1 text-sm hover:bg-gray-600"
                 href={`https://github.com/${githubUsername}`}
