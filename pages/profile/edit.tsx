@@ -147,7 +147,7 @@ const EditProfile = ({session}: {session: Session}) => {
               <div className="flex items-center gap-4">
                 <div className="flex-1">
                   <Label className="mb-1" htmlFor="email">
-                    Email
+                    Email <span className="text-red-500">*</span>
                   </Label>
                   <Input
                     id="email"
@@ -161,7 +161,7 @@ const EditProfile = ({session}: {session: Session}) => {
                 </div>
                 <div className="flex-1">
                   <Label className="mb-1" htmlFor="github_username">
-                    GitHub username
+                    GitHub username <span className="text-red-500">*</span>
                   </Label>
                   <Input
                     id="github_username"
@@ -192,7 +192,7 @@ const EditProfile = ({session}: {session: Session}) => {
                 </div>
                 <div className="flex-1">
                   <Label className="mb-1" htmlFor="discord_username">
-                    Discord username
+                    Discord username <span className="text-red-500">*</span>
                   </Label>
                   <Input
                     id="discord_username"
@@ -211,7 +211,7 @@ const EditProfile = ({session}: {session: Session}) => {
               </div>
               <div>
                 <Label className="mb-1" htmlFor="bio">
-                  About me
+                  About me <span className="text-red-500">*</span>
                 </Label>
                 <TextArea
                   id="bio"
@@ -248,7 +248,7 @@ const EditProfile = ({session}: {session: Session}) => {
               </div>
               <div>
                 <Label className="mb-1" htmlFor="project_github_url">
-                  Project GitHub URL
+                  Project GitHub URL <span className="text-red-500">*</span>
                 </Label>
                 <Input
                   id="project_github_url"
