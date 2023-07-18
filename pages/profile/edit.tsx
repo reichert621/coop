@@ -344,9 +344,6 @@ const EditProfile = ({session}: {session: Session}) => {
                 >
                   {isUpdating ? 'Updating...' : 'Update profile'}
                 </Button>
-                <div className="mt-2 text-center text-sm text-gray-500">
-                  Last saved {lastSavedAt}
-                </div>
               </div>
             </form>
           </div>
@@ -359,6 +356,20 @@ const EditProfile = ({session}: {session: Session}) => {
             </code>
           </pre>
         )}
+      </div>
+
+      <div className="flex items-center justify-between px-4 sm:px-8">
+        <Link
+          className="rounded-md"
+          href="/profile"
+          variant="discord"
+          size="sm"
+          icon={<ArrowLeftIcon className="mr-2 h-4 w-4" />}
+        >
+          Back
+        </Link>
+
+        <span className="text-sm text-gray-500">Last saved {lastSavedAt}</span>
       </div>
     </main>
   );
