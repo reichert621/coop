@@ -2,7 +2,7 @@ import React from 'react';
 import Head from 'next/head';
 import {useRouter} from 'next/router';
 import axios from 'axios';
-import {ArrowLeftIcon, PencilIcon} from '@heroicons/react/24/solid';
+import {ArrowLeftIcon} from '@heroicons/react/24/solid';
 import {
   useSessionContext,
   Session,
@@ -32,12 +32,18 @@ const parseTwitterHandle = (twitter: string) => {
   }
 };
 
-const Profile = ({session}: {session: Session}) => {
+const MemberProfile = ({
+  session,
+  username,
+}: {
+  session: Session;
+  username: string;
+}) => {
   const {user} = session;
   const router = useRouter();
   const supabase = useSupabaseClient();
   const [isLoading, setLoadingState] = React.useState(true);
-  const [profile, setUserProfile] = React.useState<Record<any, any>>({});
+  const [profile, setMemberProfile] = React.useState<Record<any, any>>({});
   const [error, setErrorMessage] = React.useState<string | null>(null);
   const debug = !!Number(router.query.debug);
 
@@ -45,9 +51,9 @@ const Profile = ({session}: {session: Session}) => {
     const init = async () => {
       try {
         const {
-          data: {user},
-        } = await axios.get(`/api/me`);
-        setUserProfile(user);
+          data: {member},
+        } = await axios.get(`/api/members/${username}`);
+        setMemberProfile(member);
       } catch (err) {
         const message = parseErrorMessage(err);
         console.error('Failed to fetch profile:', message);
@@ -96,31 +102,20 @@ const Profile = ({session}: {session: Session}) => {
         <Link
           className="rounded-md"
           href="/dashboard"
-          variant="discord"
+          variant="secondary"
           size="sm"
           icon={<ArrowLeftIcon className="mr-2 h-4 w-4" />}
         >
           Back
         </Link>
-        <div className="flex items-center gap-2">
-          <Link
-            className="rounded-md"
-            href="/profile/edit"
-            variant="secondary"
-            size="sm"
-            icon={<PencilIcon className="mr-2 h-4 w-4" />}
-          >
-            Edit Profile
-          </Link>
-          <Button
-            className="rounded-md"
-            variant="discord"
-            size="sm"
-            onClick={handleSignOut}
-          >
-            Sign out
-          </Button>
-        </div>
+        <Button
+          className="rounded-md"
+          variant="discord"
+          size="sm"
+          onClick={handleSignOut}
+        >
+          Sign out
+        </Button>
       </div>
       <FadeIn>
         <div className="flex flex-1 flex-col px-4 py-8 sm:px-8">
@@ -248,19 +243,6 @@ const Profile = ({session}: {session: Session}) => {
                 </div>
               )}
             </div>
-
-            {!bio && !projectGithubUrl && (
-              <div className="mt-8">
-                <Link
-                  className="w-full rounded-md"
-                  href="/profile/edit"
-                  size="lg"
-                  variant="secondary"
-                >
-                  Set up profile
-                </Link>
-              </div>
-            )}
           </div>
 
           {!!debug && (
@@ -280,6 +262,7 @@ export default function ProfilePage() {
   const router = useRouter();
   const {isLoading, session, error} = useSessionContext();
   console.log('Authorization:', {isLoading, session, error});
+  const username = router.query.username as string;
 
   React.useEffect(() => {
     if (error) {
@@ -291,7 +274,7 @@ export default function ProfilePage() {
     }
   }, [isLoading, session, error]);
 
-  if (isLoading || !session || !!error) {
+  if (isLoading || !username || !session || !!error) {
     return (
       <div className="flex min-h-screen w-full flex-1 flex-col items-center justify-center bg-gray-900 p-8 text-gray-300">
         <FadeIn delay={400}>
@@ -304,12 +287,12 @@ export default function ProfilePage() {
   return (
     <div className="flex min-h-screen w-full flex-1 flex-col bg-gray-900 text-gray-100">
       <Head>
-        <title>The Hacker Co-op | Profile</title>
+        <title>The Hacker Co-op | {username}</title>
         <meta name="description" content="Hacker Co-op profile" />
         <link rel="icon" href="/favicon.svg" />
       </Head>
 
-      <Profile session={session} />
+      <MemberProfile session={session} username={username} />
     </div>
   );
 }

@@ -3,9 +3,9 @@ import type {NextApiRequest, NextApiResponse} from 'next';
 import {
   findOrCreateMemberByUser,
   getSupabaseUser,
-  updateMemberById,
+  supabase,
 } from '@/utils/supabase/admin';
-import {parseErrorMessage, parseErrorStatus} from '@/utils';
+import {parseErrorMessage, parseErrorStatus} from '@/utils/index';
 
 type Data = any;
 
@@ -19,9 +19,13 @@ async function get(req: NextApiRequest, res: NextApiResponse<Data>) {
       });
     }
 
-    const member = await findOrCreateMemberByUser(user);
+    const {data, error} = await supabase.from('members').select();
 
-    return res.status(200).json({user: member});
+    if (error) {
+      console.warn('Supabase error:', error);
+    }
+
+    return res.status(200).json({members: data});
   } catch (err) {
     const status = parseErrorStatus(err);
     const message = parseErrorMessage(err);
@@ -30,7 +34,7 @@ async function get(req: NextApiRequest, res: NextApiResponse<Data>) {
   }
 }
 
-async function post(req: NextApiRequest, res: NextApiResponse<Data>) {
+async function sync(req: NextApiRequest, res: NextApiResponse<Data>) {
   try {
     const user = await getSupabaseUser(req, res);
 
@@ -40,12 +44,13 @@ async function post(req: NextApiRequest, res: NextApiResponse<Data>) {
       });
     }
 
-    const params = req.body;
-    const {id: userId} = user;
-    // const member = await findOrCreateMemberByUser(user); // FIXME
-    const member = await updateMemberById(userId, params);
+    const {data, error} = await supabase.auth.admin.listUsers();
+    const {users = []} = data;
+    const members = await Promise.all(
+      users.map((u) => findOrCreateMemberByUser(u))
+    );
 
-    return res.status(200).json({user: member});
+    return res.status(200).json({members});
   } catch (err) {
     const status = parseErrorStatus(err);
     const message = parseErrorMessage(err);
@@ -61,8 +66,6 @@ export default async function handler(
   switch (req.method) {
     case 'GET':
       return get(req, res);
-    case 'POST':
-      return post(req, res);
     default:
       return res
         .status(404)

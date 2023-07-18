@@ -4,7 +4,7 @@ import NextLink, {LinkProps} from 'next/link';
 import Spinner from '@/components/Spinner';
 
 type Variant = 'primary' | 'secondary' | 'danger' | 'discord';
-type Size = 'xs' | 'sm' | 'lg' | 'xl';
+type Size = 'icon' | 'xs' | 'sm' | 'lg' | 'xl';
 
 const getColorClassNames = (variant?: Variant) => {
   switch (variant) {
@@ -31,6 +31,8 @@ const getSizeClassNames = (size?: Size) => {
       return 'py-1 px-3 text-sm';
     case 'xs':
       return 'py-0.5 px-1 text-sm leading-tight';
+    case 'icon':
+      return ''; // Allow buttons with just an icon to set padding manually
     default:
       return 'py-2 px-4 text-sm';
   }
