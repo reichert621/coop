@@ -22,8 +22,6 @@ async function get(req: NextApiRequest, res: NextApiResponse<Data>) {
       .eq('github_username', githubUsername)
       .single();
 
-    console.log('wtf', {githubUsername, data, error});
-
     if (error) {
       console.warn('Supabase error:', error);
     }
