@@ -9,7 +9,7 @@ import {
   useSupabaseClient,
 } from '@supabase/auth-helpers-react';
 
-import {parseErrorMessage} from '@/utils';
+import {formatTimeAgo, parseErrorMessage} from '@/utils';
 import toaster from '@/utils/toaster';
 import FadeIn from '@/components/FadeIn';
 import {A, Button, Link} from '@/components/Button';
@@ -32,6 +32,36 @@ const parseTwitterHandle = (twitter: string) => {
   }
 };
 
+const parseGithubRepoUrl = (url: string, username: string) => {
+  const chunks: string[] = url.split('/');
+  const index = chunks.findIndex(
+    (str) => str.toLowerCase() === username.toLowerCase()
+  );
+
+  if (index === -1) {
+    return {owner: null, repo: null};
+  }
+
+  const owner = chunks[index];
+  const repo = chunks[index + 1];
+
+  return {owner, repo};
+};
+
+const tryFetchGithubRepoCommits = async (owner: string, repo: string) => {
+  try {
+    console.debug('Fetching commits for', `${owner}/${repo}`);
+    const {data: commits} = await axios.get(
+      `https://api.github.com/repos/${owner}/${repo}/commits`
+    );
+    console.debug('Project commits:', commits);
+    return commits;
+  } catch (e) {
+    console.error('Failed to fetch commits:', e);
+    return [];
+  }
+};
+
 const MemberProfile = ({
   session,
   username,
@@ -44,6 +74,7 @@ const MemberProfile = ({
   const supabase = useSupabaseClient();
   const [isLoading, setLoadingState] = React.useState(true);
   const [profile, setMemberProfile] = React.useState<Record<any, any>>({});
+  const [projectCommits, setProjectCommits] = React.useState<any[]>([]);
   const [error, setErrorMessage] = React.useState<string | null>(null);
   const debug = !!Number(router.query.debug);
 
@@ -54,6 +85,26 @@ const MemberProfile = ({
           data: {member},
         } = await axios.get(`/api/members/${username}`);
         setMemberProfile(member);
+        const {
+          github_username: githubUsername,
+          project_github_url: projectGithubUrl,
+        } = member;
+
+        if (!githubUsername || !projectGithubUrl) {
+          return;
+        }
+
+        const {owner, repo} = parseGithubRepoUrl(
+          projectGithubUrl,
+          githubUsername
+        );
+
+        if (!owner || !repo) {
+          return;
+        }
+
+        const commits = await tryFetchGithubRepoCommits(owner, repo);
+        setProjectCommits(commits);
       } catch (err) {
         const message = parseErrorMessage(err);
         console.error('Failed to fetch profile:', message);
@@ -96,6 +147,16 @@ const MemberProfile = ({
     twitter_url: twitterUrl,
     has_public_email: hasPublicEmail,
   } = profile;
+  // Commits are already sorted by most recent
+  const [latest] = projectCommits.filter((commit) => {
+    const username = commit?.author?.login;
+
+    if (!username) {
+      return true; // Allow null authors
+    }
+
+    return username.toLowerCase() === githubUsername.toLowerCase();
+  });
 
   return (
     <main className="mx-auto flex w-full max-w-2xl flex-1 flex-col py-4">
@@ -205,6 +266,14 @@ const MemberProfile = ({
                     <p className="text-base text-gray-500">No project found</p>
                   )}
                 </div>
+                {!!latest?.commit?.author?.date && (
+                  <div className="mt-1 text-sm text-gray-400">
+                    Last commit:{' '}
+                    <span className="font-medium text-gray-300">
+                      {formatTimeAgo(latest.commit.author.date)}
+                    </span>
+                  </div>
+                )}
               </div>
               <div className="mt-6">
                 <Label className="mb-2 text-gray-400">Goals</Label>
