@@ -48,6 +48,20 @@ const parseGithubRepoUrl = (url: string, username: string) => {
   return {owner, repo};
 };
 
+const tryFetchGithubRepoCommits = async (owner: string, repo: string) => {
+  try {
+    console.debug('Fetching commits for', `${owner}/${repo}`);
+    const {data: commits} = await axios.get(
+      `https://api.github.com/repos/${owner}/${repo}/commits`
+    );
+    console.debug('Project commits:', commits);
+    return commits;
+  } catch (e) {
+    console.error('Failed to fetch commits:', e);
+    return [];
+  }
+};
+
 const MemberProfile = ({
   session,
   username,
@@ -89,10 +103,7 @@ const MemberProfile = ({
           return;
         }
 
-        const {data: commits} = await axios.get(
-          `https://api.github.com/repos/${owner}/${repo}/commits`
-        );
-        console.debug('Project commits:', commits);
+        const commits = await tryFetchGithubRepoCommits(owner, repo);
         setProjectCommits(commits);
       } catch (err) {
         const message = parseErrorMessage(err);
