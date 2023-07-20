@@ -198,7 +198,7 @@ const Dashboard = ({session}: {session: Session}) => {
               </section>
               <section className="mb-8">
                 <h2 className="mb-4 mt-8 border-b border-gray-700 pb-1 text-sm font-semibold uppercase tracking-widest text-gray-300">
-                  Members
+                  Active ({active.length})
                 </h2>
                 <div className="space-y-3">
                   {active.map((member: any) => {
@@ -208,7 +208,7 @@ const Dashboard = ({session}: {session: Session}) => {
               </section>
               <section className="mb-8">
                 <h2 className="mb-4 mt-8 border-b border-gray-700 pb-1 text-sm font-semibold uppercase tracking-widest text-gray-300">
-                  Pending
+                  Pending ({pending.length})
                 </h2>
                 <div className="space-y-3">
                   {pending.map((member: any) => {
