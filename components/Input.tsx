@@ -95,3 +95,47 @@ export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
 );
 
 Checkbox.displayName = 'Checkbox';
+
+type SelectProps = {
+  variant?: Variant;
+  size?: Size;
+  error?: any;
+  icon?: React.ReactNode;
+} & InputHTMLAttributes<HTMLSelectElement>;
+
+export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
+  (props, ref) => {
+    const {className, error, ...rest} = props;
+
+    // TODO: modify className based on variant, size, etc
+    return (
+      <div className={`relative ${className}`}>
+        <select
+          ref={ref}
+          className={`${className} ${
+            error
+              ? 'border-red-500 focus:border-red-400'
+              : 'border-gray-700 focus:border-gray-600'
+          } w-full appearance-none rounded border bg-gray-700 bg-opacity-60 py-2 pl-3 pr-8 font-medium text-gray-300 outline-none`}
+          {...rest}
+        />
+        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-500">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+            className="h-5 w-5"
+          >
+            <path
+              fillRule="evenodd"
+              d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+              clipRule="evenodd"
+            />
+          </svg>
+        </div>
+      </div>
+    );
+  }
+);
+
+Select.displayName = 'Select';

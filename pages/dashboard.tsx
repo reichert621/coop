@@ -14,13 +14,19 @@ import {
   InformationCircleIcon,
 } from '@heroicons/react/24/solid';
 
-import {parseErrorMessage} from '@/utils';
+import {
+  formatTimeAgo,
+  parseErrorMessage,
+  parseGithubRepoUrl,
+  tryFetchGithubRepoCommits,
+} from '@/utils';
 import toaster from '@/utils/toaster';
 import FadeIn from '@/components/FadeIn';
 import {Button, Link} from '@/components/Button';
 import Spinner from '@/components/Spinner';
 import {DiscordIcon, GithubIcon} from '@/components/Icons';
 import Alert from '@/components/Alert';
+import dayjs from 'dayjs';
 
 const isActiveMember = (member: any) => {
   return !!(member && member.bio && member.project_github_url);
@@ -33,12 +39,55 @@ const MemberCard = ({
   member: any;
   isCurrentUser?: boolean;
 }) => {
+  const [latestProjectCommit, setLatestCommit] = React.useState<any | null>(
+    null
+  );
   const {
     display_name: displayName,
     github_username: githubUsername,
     discord_username: discordUsername,
+    project_github_url: projectGithubUrl,
   } = member;
   const hasIncompleteProfile = !isActiveMember(member);
+  const {owner, repo} = projectGithubUrl
+    ? parseGithubRepoUrl(projectGithubUrl, githubUsername)
+    : {owner: githubUsername, repo: null};
+
+  React.useEffect(() => {
+    const init = async () => {
+      try {
+        if (!githubUsername || !projectGithubUrl) {
+          return;
+        }
+
+        const {owner, repo} = parseGithubRepoUrl(
+          projectGithubUrl,
+          githubUsername
+        );
+
+        if (!owner || !repo) {
+          return;
+        }
+
+        const commits = await tryFetchGithubRepoCommits(owner, repo);
+        const [latest] = commits;
+
+        setLatestCommit(latest);
+      } catch (err) {
+        const message = parseErrorMessage(err);
+        console.error('Failed to fetch:', message);
+      } finally {
+        //
+      }
+    };
+
+    init();
+  }, [member.id]);
+
+  const lastCommitAt = latestProjectCommit?.commit?.author?.date ?? null;
+  const daysSinceLastCommit = lastCommitAt
+    ? dayjs().diff(dayjs(lastCommitAt), 'days')
+    : Infinity;
 
   return (
     <div
@@ -46,9 +95,9 @@ const MemberCard = ({
         isCurrentUser
           ? 'border-indigo-500 hover:border-indigo-400'
           : 'border-gray-700 hover:border-gray-600'
-      } rounded-r border-l-2 bg-gray-800 px-4 py-3 transition-colors`}
+      } rounded-r border-l-2 bg-gray-800 transition-colors`}
     >
-      <div className="flex items-center justify-between gap-4">
+      <div className="flex items-center justify-between gap-4 px-4 py-3">
         <div className="flex items-center gap-4">
           <NextLink
             className="text-lg font-bold text-gray-100 hover:text-white"
@@ -84,6 +133,38 @@ const MemberCard = ({
           <ArrowRightIcon className="h-4 w-4" />
         </Link>
       </div>
+
+      {process.env.NODE_ENV === 'development' && (
+        <div className="flex items-center justify-between bg-gray-700 px-4 py-1">
+          <a
+            className="inline-flex items-center text-xs text-gray-300 hover:text-white hover:underline"
+            href={projectGithubUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <GithubIcon className="mr-1 h-3 w-3" />
+            {[owner, repo].filter(Boolean).join('/')}
+          </a>
+          <span className="text-xs text-gray-300">
+            Last activity:{' '}
+            {lastCommitAt ? (
+              <span
+                className={`${
+                  daysSinceLastCommit < 5
+                    ? 'text-green-400'
+                    : daysSinceLastCommit < 10
+                    ? 'text-amber-400'
+                    : 'text-red-400'
+                } font-medium`}
+              >
+                {formatTimeAgo(lastCommitAt)}
+              </span>
+            ) : (
+              <span className="text-red-400">Not found</span>
+            )}
+          </span>
+        </div>
+      )}
     </div>
   );
 };

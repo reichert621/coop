@@ -9,7 +9,13 @@ import {
   useSupabaseClient,
 } from '@supabase/auth-helpers-react';
 
-import {formatTimeAgo, parseErrorMessage} from '@/utils';
+import {
+  formatTimeAgo,
+  parseErrorMessage,
+  parseGithubRepoUrl,
+  parseTwitterHandle,
+  tryFetchGithubRepoCommits,
+} from '@/utils';
 import toaster from '@/utils/toaster';
 import FadeIn from '@/components/FadeIn';
 import {A, Button, Link} from '@/components/Button';
@@ -21,46 +27,6 @@ import {
 } from '@/components/Icons';
 import {Label} from '@/components/Input';
 import Spinner from '@/components/Spinner';
-
-const parseTwitterHandle = (twitter: string) => {
-  if (twitter.includes('twitter.com')) {
-    const chunks = twitter.split('/');
-
-    return chunks[chunks.length - 1];
-  } else {
-    return twitter;
-  }
-};
-
-const parseGithubRepoUrl = (url: string, username: string) => {
-  const chunks: string[] = url.split('/');
-  const index = chunks.findIndex(
-    (str) => str.toLowerCase() === username.toLowerCase()
-  );
-
-  if (index === -1) {
-    return {owner: null, repo: null};
-  }
-
-  const owner = chunks[index];
-  const repo = chunks[index + 1];
-
-  return {owner, repo};
-};
-
-const tryFetchGithubRepoCommits = async (owner: string, repo: string) => {
-  try {
-    console.debug('Fetching commits for', `${owner}/${repo}`);
-    const {data: commits} = await axios.get(
-      `https://api.github.com/repos/${owner}/${repo}/commits`
-    );
-    console.debug('Project commits:', commits);
-    return commits;
-  } catch (e) {
-    console.error('Failed to fetch commits:', e);
-    return [];
-  }
-};
 
 const MemberProfile = ({
   session,

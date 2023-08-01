@@ -1,3 +1,4 @@
+import axios from 'axios';
 import dayjs from 'dayjs';
 
 export const sleep = (ms: number) =>
@@ -18,6 +19,58 @@ export const parseErrorMessage = (err: any) => {
     String(err) ||
     err
   );
+};
+
+export const getClientTimeZone = () => {
+  try {
+    return Intl.DateTimeFormat().resolvedOptions().timeZone;
+  } catch (e) {
+    console.warn('Client timezone unavailable.', e);
+    return null;
+  }
+};
+
+export const parseTwitterHandle = (twitter: string) => {
+  if (twitter.includes('twitter.com')) {
+    const chunks = twitter.split('/');
+
+    return chunks[chunks.length - 1];
+  } else {
+    return twitter;
+  }
+};
+
+export const parseGithubRepoUrl = (url: string, username: string) => {
+  const chunks: string[] = url.split('/');
+  const index = chunks.findIndex(
+    (str) => str.toLowerCase() === username.toLowerCase()
+  );
+
+  if (index === -1) {
+    return {owner: username, repo: null};
+  }
+
+  const owner = chunks[index];
+  const repo = chunks[index + 1];
+
+  return {owner, repo};
+};
+
+export const tryFetchGithubRepoCommits = async (
+  owner: string,
+  repo: string
+) => {
+  try {
+    console.debug('Fetching commits for', `${owner}/${repo}`);
+    const {data: commits} = await axios.get(
+      `https://api.github.com/repos/${owner}/${repo}/commits`
+    );
+    console.debug('Project commits:', owner, repo, commits);
+    return commits;
+  } catch (e) {
+    console.error('Failed to fetch commits:', e);
+    return [];
+  }
 };
 
 export const formatTimeAgo = (timestamp: any) => {

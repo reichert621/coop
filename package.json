@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "format": "prettier --write ./**/*.{ts,tsx}"
+    "format": "prettier --write ./**/*.{ts,tsx}",
+    "supabase:types": "echo 'npx supabase gen types typescript --project-id \"$SUPABASE_PROJECT_ID\" --schema public > types/supabase.ts'"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.14",
@@ -40,6 +41,7 @@
     "postcss": "^8.4.21",
     "prettier": "^2.8.7",
     "prettier-plugin-tailwindcss": "^0.2.7",
+    "supabase": ">=1.8.1",
     "tailwindcss": "^3.3.1"
   }
 }

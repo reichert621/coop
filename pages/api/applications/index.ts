@@ -42,48 +42,28 @@ async function post(req: NextApiRequest, res: NextApiResponse<Data>) {
   try {
     const params = {...req.query, ...req.body};
     const {
-      email,
-      discord_username,
-      github_username,
-      homework_staging_url,
-      homework_github_url,
+      commitment,
+      education,
+      employment,
+      can_use_git,
+      languages,
+      location,
+      timezone,
       project_proposal,
     } = params;
 
-    if (!isValidEmail(email)) {
-      return res
-        .status(400)
-        .json({field: 'email', error: 'Invalid or missing email.'});
-    } else if (!isNonEmptyString(discord_username)) {
-      return res.status(400).json({
-        field: 'discord_username',
-        error: 'A Discord username is required.',
-      });
-    } else if (!isValidVercelUrl(homework_staging_url)) {
-      return res.status(400).json({
-        field: 'homework_staging_url',
-        error: 'Invalid or missing homework URL.',
-      });
-    } else if (!isValidGithubUrl(homework_github_url)) {
-      return res.status(400).json({
-        field: 'homework_github_url',
-        error: 'Invalid or missing homework Github URL.',
-      });
-    } else if (!isNonEmptyString(project_proposal)) {
-      return res.status(400).json({
-        field: 'project_proposal',
-        error: 'A project proposal is required.',
-      });
-    }
+    // TODO: validate fields depending on which point in the application the user is at
 
     const {data, error} = await supabase
       .from('applications')
       .insert({
-        email,
-        discord_username,
-        github_username,
-        homework_staging_url,
-        homework_github_url,
+        commitment,
+        education,
+        employment,
+        can_use_git,
+        languages,
+        location,
+        timezone,
         project_proposal,
       })
       .select();
@@ -97,11 +77,14 @@ async function post(req: NextApiRequest, res: NextApiResponse<Data>) {
       });
     }
 
-    const [record] = data;
+    const [application] = data;
 
-    return res
-      .status(200)
-      .json({application: {...record, hash: encodeSubmissionHash(record)}});
+    return res.status(200).json({
+      application: {
+        ...application,
+        // hash: encodeSubmissionHash(application)
+      },
+    });
   } catch (err: any) {
     const status = parseErrorStatus(err);
     const message = parseErrorMessage(err);
